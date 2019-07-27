@@ -51,7 +51,7 @@ function filmTitleListener() {
   let filmTitleIs = JSON.parse(this.responseText);
   let getLengthOfFilm = filmTitleIs.results;
 
-  console.log(getLengthOfFilm);
+  // console.log(getLengthOfFilm);
 
   for (let i = 0; i < getLengthOfFilm.length; i++) {
     let getFilmId = document.getElementById("filmList");
@@ -66,29 +66,39 @@ function filmTitleListener() {
 
     let makePlanetH3 = document.createElement("h3");
     makePlanetH3.innerHTML = "Planets";
-    getFilmId.appendChild(makePlanetH3);
+    makeFilmLi.appendChild(makePlanetH3);
 
-    //   let makePlanetUl = document.createElement("ul");
-    //   makePlanetUl.className = "filmPlanets";
-    //   makePlanetUl.innerHTML = "testing";
-    //   makePlanetH3.appendChild(makePlanetUl);
+    // console.log(getLengthOfFilm[i].planets);
 
-    console.log(getLengthOfFilm[i].planets);
+    let getZePlanets = getLengthOfFilm[i].planets;
 
-  //   let getZePlanets = getLengthOfFilm[i].planets;
+    for (let j = 0; j < getZePlanets.length; j++) {
+      const getPlanets = new XMLHttpRequest();
 
-  //   for (let j = 0; j < getZePlanets.length; i++) {
-  //   const getPlanets = new XMLHttpRequest();
+      function planetListener() {
+        let planetNameIs = JSON.parse(this.responseText);
+        // console.log(planetNameIs);
+        let getPlanetName = planetNameIs.name;
 
-  //   function planetListener() {
-  //     let planetNameIs = JSON.parse(this.responseText);
-  //     let getPlanetName = planetNameIs;
-  //   }
+        let makePlanetUl = document.createElement("ul");
+        makePlanetUl.className = "filmPlanets";
+        makeFilmLi.appendChild(makePlanetUl);
 
-  //   getPlanets.addEventListener("load", planetListener);
-  //   getPlanets.open("GET", getLengthOfFilm[i].planets);
-  //   getPlanets.send();
-  // }
+        let makePlanetLi = document.createElement("li");
+        makePlanetLi.className = "planet";
+        makePlanetUl.appendChild(makePlanetLi);
+
+        let makePlanetH4 = document.createElement("h4");
+        makePlanetH4.className = "planetName";
+        makePlanetH4.innerHTML = getPlanetName;
+        makePlanetLi.appendChild(makePlanetH4);
+      }
+
+      getPlanets.addEventListener("load", planetListener);
+      getPlanets.open("GET", getZePlanets[j]);
+      getPlanets.send();
+    }
+  }
 }
 
 getFilm.addEventListener("load", filmTitleListener);
